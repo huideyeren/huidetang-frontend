@@ -5,10 +5,10 @@ import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 
-const BasePage = ({ data }) => {
-  const page = data.wagtail.pages.wagtailcore.page[0];
+const ArticlePage = ({ data }) => {
+  const page = data.wagtail.pages.articles.articlePage[0];
 
-  const renderPageList = (pages, title) => {
+  const renderPageList = (pages, title, author) => {
     if (!pages || pages.length === 0) {
       return;
     }
@@ -32,6 +32,7 @@ const BasePage = ({ data }) => {
   return <Layout>
     <SEO title={page.seoTitle} description={page.seoDescription} />
     <h1>{page.title}</h1>
+    <p>{page.author.name != null ? 'Posted by ' + page.author.name + '.' : 'Posted anonymously.'}</p>
     {renderPageList([page.parent].filter(x => x), 'Parent')}
     {renderPageList(page.ancestors, 'Ancestors')}
     {renderPageList(page.children, 'Children')}
@@ -41,39 +42,45 @@ const BasePage = ({ data }) => {
   </Layout>;
 };
 
-BasePage.propTypes = {
+ArticlePage.propTypes = {
   data: PropTypes.object.isRequired
 };
 
 export const query = graphql`
-  query($pageID: ID) {
+  query ($pageID: ID) {
     wagtail {
       pages {
-        wagtailcore {
-          page(id: $pageID) {
+        articles {
+          articlePage(id: $pageID) {
             id
             title
+            body
+            date
+            author {
+              id
+              name
+              portrait {
+                id
+                title
+              }
+            }
             seoTitle
             seoDescription
-
             parent {
               title
               id
               url
             }
-
             children {
               title
               id
               url
             }
-
             previousSiblings(limit: 1) {
               title
               id
               url
             }
-
             nextSiblings(limit: 1) {
               title
               id
@@ -86,4 +93,4 @@ export const query = graphql`
   }
 `;
 
-export default BasePage;
+export default ArticlePage;
