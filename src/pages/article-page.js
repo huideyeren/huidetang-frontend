@@ -33,6 +33,7 @@ const ArticlePage = ({ data }) => {
     <SEO title={page.seoTitle} description={page.seoDescription} />
     <h1>{page.title}</h1>
     <p>{page.author.name != null ? 'Posted by ' + page.author.name + '.' : 'Posted anonymously.'}</p>
+    <p>Published at {page.date}</p>
     {renderPageList([page.parent].filter(x => x), 'Parent')}
     {renderPageList(page.ancestors, 'Ancestors')}
     {renderPageList(page.children, 'Children')}
