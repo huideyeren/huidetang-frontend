@@ -19,7 +19,10 @@ module.exports = {
       options: {
         typeName: 'WAGTAIL',
         fieldName: 'wagtail',
-        url: getWagtailGraphQLEndpoint()
+        url: getWagtailGraphQLEndpoint(),
+        mapping: {
+          'body': 'test/markdown'
+        }
       }
     },
     `gatsby-plugin-react-helmet`,

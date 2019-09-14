@@ -29,11 +29,22 @@ const ArticlePage = ({ data }) => {
     </>;
   };
 
+  const renderMarkdown = (page) => {
+    return (
+      <div
+        dangerouslySetInnerHTML={{
+          __html: page.body.html
+        }}
+      />
+    );
+  };
+
   return <Layout>
     <SEO title={page.seoTitle} description={page.seoDescription} />
     <h1>{page.title}</h1>
     <p>{page.author != null ? 'Posted by ' + page.author.name + '.' : 'Posted anonymously.'}</p>
     <p>Published at {page.date}</p>
+    {renderMarkdown(page)}
     {renderPageList([page.parent].filter(x => x), 'Parent')}
     {renderPageList(page.ancestors, 'Ancestors')}
     {renderPageList(page.children, 'Children')}
