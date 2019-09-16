@@ -4,9 +4,13 @@ import { graphql, Link } from 'gatsby';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+import Moment from 'moment-timezone';
 
 const ArticlePage = ({ data }) => {
   const page = data.wagtail.pages.articles.articlePage[0];
+
+  const timeZone = 'Asia/Tokyo';
+  const date = Moment(page.date).tz(timeZone).format('YYYY-MM-DD mm:ss');
 
   const renderPageList = (pages, title, author) => {
     if (!pages || pages.length === 0) {
@@ -33,7 +37,7 @@ const ArticlePage = ({ data }) => {
     return (
       <div
         dangerouslySetInnerHTML={{
-          __html: page.body.html
+          __html: page.body
         }}
       />
     );
@@ -43,7 +47,7 @@ const ArticlePage = ({ data }) => {
     <SEO title={page.seoTitle} description={page.seoDescription} />
     <h1>{page.title}</h1>
     <p>{page.author != null ? 'Posted by ' + page.author.name + '.' : 'Posted anonymously.'}</p>
-    <p>Published at {page.date}</p>
+    <p>Published at {date}</p>
     {renderMarkdown(page)}
     {renderPageList([page.parent].filter(x => x), 'Parent')}
     {renderPageList(page.ancestors, 'Ancestors')}

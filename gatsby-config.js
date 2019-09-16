@@ -19,12 +19,10 @@ module.exports = {
       options: {
         typeName: 'WAGTAIL',
         fieldName: 'wagtail',
-        url: getWagtailGraphQLEndpoint(),
-        mapping: {
-          'body': 'test/markdown'
-        }
+        url: getWagtailGraphQLEndpoint()
       }
     },
+    `gatsby-transformer-json`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -38,6 +36,8 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
+        // Plugins configs
+        plugins: [`gatsby-remark-smartypants`],
         // CommonMark mode (default: true)
         commonmark: true,
         // Footnotes mode (default: true)
@@ -45,9 +45,7 @@ module.exports = {
         // Pedantic mode (default: true)
         pedantic: true,
         // GitHub Flavored Markdown mode (default: true)
-        gfm: true,
-        // Plugins configs
-        plugins: []
+        gfm: true
       }
     }
 

@@ -18,7 +18,8 @@ function getComponentPathForType (pageType) {
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  return graphql(` {
+  return graphql(`
+    {
       wagtail {
         pages {
           wagtailcore {
