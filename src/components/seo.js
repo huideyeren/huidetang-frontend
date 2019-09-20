@@ -11,7 +11,7 @@ import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
 
 function SEO ({ author, description, lang, meta, keywords, title }) {
-  const { site, wagtail } = useStaticQuery(
+  const { site, allWagtailData } = useStaticQuery(
     graphql`
       query {
         site {
@@ -20,7 +20,7 @@ function SEO ({ author, description, lang, meta, keywords, title }) {
             author
           }
         }
-        wagtail {
+        allWagtailData {
           currentSite {
             name
           }
@@ -29,7 +29,7 @@ function SEO ({ author, description, lang, meta, keywords, title }) {
     `
   );
 
-  const wagtailSite = wagtail.currentSite;
+  const wagtailSite = allWagtailData.currentSite;
   const metaDescription = description || site.siteMetadata.description;
   const metaAuthor = author || site.siteMetadata.author;
 

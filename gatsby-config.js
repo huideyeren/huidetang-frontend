@@ -1,9 +1,9 @@
 require('dotenv').config();
 
 function getWagtailGraphQLEndpoint () {
-  url = process.env.WAGTAIL_GRAPHQL_ENDPOINT;
+  const url = process.env.WAGTAIL_GRAPHQL_ENDPOINT;
   if (!url) {
-    throw new Error("You need to set WAGTAIL_GRAPHQL_ENDPOINT.");
+    throw new Error('You need to set WAGTAIL_GRAPHQL_ENDPOINT.');
   }
   return url;
 }
@@ -17,8 +17,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-graphql',
       options: {
-        typeName: 'WAGTAIL',
-        fieldName: 'wagtail',
+        typeName: 'AllWagtailData',
+        fieldName: 'allWagtailData',
         url: getWagtailGraphQLEndpoint()
       }
     },

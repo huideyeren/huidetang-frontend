@@ -6,7 +6,7 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 
 const HomePage = ({ data }) => {
-  const page = data.wagtail.pages.home.homePage[0];
+  const page = data.allWagtailData.pages.home.homePage[0];
 
   const renderPageList = (pages, title) => {
     if (!pages || pages.length === 0) {
@@ -46,7 +46,7 @@ HomePage.propTypes = {
 
 export const query = graphql`
   query($pageID: ID) {
-    wagtail {
+    allWagtailData {
       pages {
         home {
           homePage(id: $pageID) {

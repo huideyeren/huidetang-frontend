@@ -7,7 +7,7 @@ import SEO from '../components/seo';
 import Moment from 'moment-timezone';
 
 const ArticlePage = ({ data }) => {
-  const page = data.wagtail.pages.articles.articlePage[0];
+  const page = data.allWagtailData.pages.articles.articlePage[0];
 
   const timeZone = 'Asia/Tokyo';
   const date = Moment(page.date).tz(timeZone).format('YYYY-MM-DD mm:ss');
@@ -64,7 +64,7 @@ ArticlePage.propTypes = {
 
 export const query = graphql`
   query ($pageID: ID) {
-    wagtail {
+    allWagtailData {
       pages {
         articles {
           articlePage(id: $pageID) {

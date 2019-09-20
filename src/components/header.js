@@ -30,7 +30,7 @@ const Header = ({ siteTitle }) => (
       <StaticQuery
         query={graphql`
           query {
-            wagtail {
+            allWagtailData {
               pages {
                 wagtailcore {
                   page(depth: 3, showInMenus: true) {
@@ -43,10 +43,10 @@ const Header = ({ siteTitle }) => (
             }
           }
         `}
-        render={({ wagtail }) => (
+        render={({ allWagtailData }) => (
           <nav className='main-nav'>
             <ul>
-              {wagtail.pages.wagtailcore.page.map(page => <li key={page.id}>
+              {allWagtailData.pages.wagtailcore.page.map(page => <li key={page.id}>
                 <Link to={page.url}>{page.title}</Link>
               </li>)}
             </ul>

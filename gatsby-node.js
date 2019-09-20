@@ -20,7 +20,7 @@ exports.createPages = ({ graphql, actions }) => {
 
   return graphql(`
     {
-      wagtail {
+      allWagtailData {
         pages {
           wagtailcore {
             page {
@@ -37,7 +37,7 @@ exports.createPages = ({ graphql, actions }) => {
       throw errors;
     }
 
-    data.wagtail.pages.wagtailcore.page.forEach(({ url, id, pageType }) => {
+    data.allWagtailData.pages.wagtailcore.page.forEach(({ url, id, pageType }) => {
       createPage({
         path: url,
         component: getComponentPathForType(pageType),
