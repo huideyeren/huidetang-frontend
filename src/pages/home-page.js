@@ -5,8 +5,11 @@ import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 
+const dateformat = require(`dateformat`);
+
 const HomePage = ({ data }) => {
   const page = data.allWagtailData.pages.home.homePage[0];
+  const articles = data.allWagtailData.pages.articles.articlePage;
 
   const renderPageList = (pages, title) => {
     if (!pages || pages.length === 0) {
@@ -21,10 +24,32 @@ const HomePage = ({ data }) => {
 
     return <>
       {titleHeading}
+      <h3>記事へのリンク</h3>
       <ul>
-        {pages.map(page => <li key={page.id}>
-          <Link to={page.url}>{page.title}</Link>
-        </li>)}
+        {articles.map(article => {
+          const createdAt = Date.parse(article.date);
+          const year = dateformat(createdAt, `yyyy`);
+          const month = dateformat(createdAt, `MM`);
+          const day = dateformat(createdAt, `dd`);
+          const url = `/${year}/${month}/${day}/${article.slug}/`;
+          return (
+            <li key={article.id}>
+              <Link to={url}>{article.title}</Link>
+            </li>
+          );
+        })}
+      </ul>
+      <h3>子ページへのリンク</h3>
+      <ul>
+        {pages.map(page => {
+          if (page.pageType !== 'articles.ArticlePage') {
+            return (
+              <li key={page.id}>
+                <Link to={page.url}>{page.title}</Link>
+              </li>
+            );
+          }
+        })}
       </ul>
     </>;
   };
@@ -58,7 +83,16 @@ export const query = graphql`
               id
               title
               url
+              pageType
             }
+          }
+        }
+        articles {
+          articlePage {
+            id
+            slug
+            date
+            pageType
           }
         }
       }

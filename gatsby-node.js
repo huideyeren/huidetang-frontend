@@ -5,6 +5,7 @@
  */
 
 const path = require('path');
+const dateformat = require(`dateformat`);
 
 const PAGE_TYPES = {
   'home.HomePage': path.resolve('src', 'pages', 'home-page.js'),
@@ -29,6 +30,14 @@ exports.createPages = ({ graphql, actions }) => {
               pageType
             }
           }
+          articles {
+            articlePage {
+              id
+              slug
+              date
+              pageType
+            }
+          }
         }
       }
     }
@@ -36,15 +45,29 @@ exports.createPages = ({ graphql, actions }) => {
     if (errors) {
       throw errors;
     }
-
-    data.allWagtailData.pages.wagtailcore.page.forEach(({ url, id, pageType }) => {
+    data.allWagtailData.pages.articles.articlePage.forEach(({ id, slug, date, pageType }) => {
+      const createdAt = Date.parse(date);
+      const year = dateformat(createdAt, `yyyy`);
+      const month = dateformat(createdAt, `MM`);
+      const day = dateformat(createdAt, `dd`);
       createPage({
-        path: url,
+        path: `/${year}/${month}/${day}/${slug}/`,
         component: getComponentPathForType(pageType),
         context: {
           pageID: id
         }
       });
+    });
+    data.allWagtailData.pages.wagtailcore.page.forEach(({ url, id, pageType }) => {
+      if (pageType !== 'articles.ArticlePage') {
+        createPage({
+          path: url,
+          component: getComponentPathForType(pageType),
+          context: {
+            pageID: id
+          }
+        });
+      }
     });
   });
 };
