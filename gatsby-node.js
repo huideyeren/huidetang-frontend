@@ -48,7 +48,7 @@ exports.createPages = ({ graphql, actions }) => {
     data.allWagtailData.pages.articles.articlePage.forEach(({ id, slug, date, pageType }) => {
       const createdAt = Date.parse(date);
       const year = dateformat(createdAt, `yyyy`);
-      const month = dateformat(createdAt, `MM`);
+      const month = dateformat(createdAt, `mm`);
       const day = dateformat(createdAt, `dd`);
       createPage({
         path: `/${year}/${month}/${day}/${slug}/`,

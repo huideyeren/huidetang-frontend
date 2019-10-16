@@ -29,7 +29,7 @@ const HomePage = ({ data }) => {
         {articles.map(article => {
           const createdAt = Date.parse(article.date);
           const year = dateformat(createdAt, `yyyy`);
-          const month = dateformat(createdAt, `MM`);
+          const month = dateformat(createdAt, `mm`);
           const day = dateformat(createdAt, `dd`);
           const url = `/${year}/${month}/${day}/${article.slug}/`;
           return (
@@ -90,6 +90,7 @@ export const query = graphql`
         articles {
           articlePage {
             id
+            title
             slug
             date
             pageType
