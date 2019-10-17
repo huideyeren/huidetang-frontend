@@ -78,6 +78,20 @@ export const query = graphql`
               portrait {
                 id
                 title
+                rendition {
+                  url
+                  alt
+                  id
+                }
+              }
+            }
+            feedImage {
+              title
+              id
+              rendition {
+                id
+                url
+                alt
               }
             }
             seoTitle
