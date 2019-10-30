@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, Link } from 'gatsby';
+import Markdown from '../components/markdown';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -33,22 +34,12 @@ const ArticlePage = ({ data }) => {
     </>;
   };
 
-  const renderMarkdown = (page) => {
-    return (
-      <div
-        dangerouslySetInnerHTML={{
-          __html: page.body
-        }}
-      />
-    );
-  };
-
   return <Layout>
     <SEO title={page.seoTitle} description={page.seoDescription} />
     <h1>{page.title}</h1>
     <p>{page.author != null ? 'Posted by ' + page.author.name + '.' : 'Posted anonymously.'}</p>
     <p>Published at {date}</p>
-    {renderMarkdown(page)}
+    <Markdown>{page.body}</Markdown>
     {renderPageList([page.parent].filter(x => x), 'Parent')}
     {renderPageList(page.ancestors, 'Ancestors')}
     {renderPageList(page.children, 'Children')}
